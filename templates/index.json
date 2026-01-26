@@ -1,0 +1,30 @@
+{
+  "sections": {
+    "header": {
+      "type": "header"
+    },
+    "hero": {
+      "type": "hero"
+    },
+    "featured_products": {
+      "type": "featured-products"
+    },
+    "about": {
+      "type": "about"
+    },
+    "contact": {
+      "type": "contact"
+    },
+    "footer": {
+      "type": "footer"
+    }
+  },
+  "order": [
+    "header",
+    "hero",
+    "featured_products",
+    "about",
+    "contact",
+    "footer"
+  ]
+}

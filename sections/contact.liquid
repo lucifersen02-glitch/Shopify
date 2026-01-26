@@ -1,0 +1,72 @@
+{% schema %}
+{
+  "name": "Contact Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get in Touch"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Have a question? We'd love to hear from you. Send us a message and we'll respond as soon as possible."
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email",
+      "default": "contact@example.com"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone",
+      "default": "+1 (555) 123-4567"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Section"
+    }
+  ]
+}
+{% endschema %}
+
+<section id="contact" class="contact">
+  <div class="container">
+    <h2 class="section-heading">{{ section.settings.heading }}</h2>
+    <p class="contact__description">{{ section.settings.description }}</p>
+    
+    <div class="contact__content">
+      <div class="contact__info">
+        <div class="contact__item">
+          <h3>Email</h3>
+          <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
+        </div>
+        <div class="contact__item">
+          <h3>Phone</h3>
+          <a href="tel:{{ section.settings.phone }}">{{ section.settings.phone }}</a>
+        </div>
+      </div>
+      
+      <form class="contact__form">
+        <div class="contact__field">
+          <label for="contact-name">Name</label>
+          <input type="text" id="contact-name" name="name" required>
+        </div>
+        <div class="contact__field">
+          <label for="contact-email">Email</label>
+          <input type="email" id="contact-email" name="email" required>
+        </div>
+        <div class="contact__field">
+          <label for="contact-message">Message</label>
+          <textarea id="contact-message" name="message" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="button button--primary">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
