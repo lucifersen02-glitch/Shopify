@@ -51,7 +51,7 @@
       <div class="product-grid">
         {% for product in products_collection.products %}
           <div class="product-card" data-animate="fade-up" data-delay="{{ forloop.index | times: 0.05 }}">
-            <a href="{% if product.url %}{{ product.url }}{% else %}{{ routes.collections_url }}{% endif %}" class="product-card__link">
+            <a href="{{ product.url }}" class="product-card__link">
               <div class="product-card__image">
                 {% if product.featured_image %}
                   {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.featured_image.alt | escape, class: 'product-card__image-img' }}
@@ -82,7 +82,7 @@
       </div>
     {% else %}
       <div class="collection-products__empty">
-        <p>No products found.</p>
+        <p>No products found. Please add products to your store.</p>
         <a href="{{ routes.root_url }}" class="button button--primary">Continue Shopping</a>
       </div>
     {% endif %}
