@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "header": {
+      "type": "header"
+    },
+    "all_products": {
+      "type": "all-products"
+    },
+    "footer": {
+      "type": "footer"
+    }
+  },
+  "order": [
+    "header",
+    "all_products",
+    "footer"
+  ]
+}
