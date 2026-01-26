@@ -33,7 +33,26 @@
 {% endschema %}
 
 {%- liquid
-  assign all_products = collections.all.products
+  comment
+    Get all products - try collections.all first, then fallback to all products
+  endcomment
+  if collections.all.products.size > 0
+    assign all_products = collections.all.products
+  else
+    comment
+      Fallback: Get products from all collections
+    endcomment
+    assign all_products = blank
+    for collection in collections
+      unless collection.handle == 'frontpage'
+        if all_products == blank
+          assign all_products = collection.products
+        else
+          assign all_products = all_products | concat: collection.products | uniq
+        endif
+      endunless
+    endfor
+  endif
 -%}
 
 <section class="all-products-section">
