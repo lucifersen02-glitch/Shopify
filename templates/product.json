@@ -6,9 +6,6 @@
     "product_main": {
       "type": "product-main"
     },
-    "product_features": {
-      "type": "product-features"
-    },
     "product_description": {
       "type": "product-description"
     },
@@ -22,7 +19,6 @@
   "order": [
     "header",
     "product_main",
-    "product_features",
     "product_description",
     "related_products",
     "footer"
