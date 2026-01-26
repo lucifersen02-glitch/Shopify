@@ -772,14 +772,20 @@ body {
   position: absolute;
   top: var(--spacing-sm);
   right: var(--spacing-sm);
-  background: var(--color-gradient-2);
+  background: #ff4444;
   color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 50px;
-  font-size: 0.875rem;
+  padding: 0.5rem 0.875rem;
+  border-radius: 4px;
+  font-size: 0.8125rem;
   font-weight: 700;
-  box-shadow: var(--shadow-md);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   z-index: 2;
+}
+
+.product-card__badge::before {
+  content: 'On sale';
 }
 
 .product-card__overlay {
@@ -831,24 +837,47 @@ body {
 
 .product-card__price {
   display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .product-card__price-current {
   font-size: 1.5rem;
-  font-weight: 800;
-  background: var(--color-gradient-1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.product-card__price-current::before {
+  content: 'Sale price';
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-light);
+  margin-bottom: 0.25rem;
 }
 
 .product-card__price--compare {
   font-size: 1rem;
   color: var(--color-text-light);
   text-decoration: line-through;
+}
+
+.product-card__price--compare::before {
+  content: 'Regular price';
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-light);
+  margin-bottom: 0.25rem;
+}
+
+.product-card__discount {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-success);
+  margin-top: 0.25rem;
+  text-transform: lowercase;
 }
 
 /* Testimonials Section */
@@ -2724,6 +2753,32 @@ body {
   .product-card__image img {
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
+  }
+}
+
+/* Responsive adjustments for new sections */
+@media (max-width: 768px) {
+  .trust-badge__content {
+    font-size: 0.875rem;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+  }
+
+  .social-proof-banner {
+    padding: var(--spacing-sm) 0;
+  }
+
+  .social-proof-banner__text {
+    font-size: 0.875rem;
+  }
+
+  .our-story .about__description {
+    font-size: 1rem;
+  }
+
+  .product-card__price-current::before,
+  .product-card__price--compare::before {
+    font-size: 0.8125rem;
   }
 }
 
