@@ -78,7 +78,10 @@
             <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <div class="stat-card__number" data-count="{{ section.settings.stat_1_number }}">{{ section.settings.stat_1_number }}</div>
+        <div class="stat-card__number" data-count="{{ section.settings.stat_1_number }}">
+          {% assign number_parts = section.settings.stat_1_number | split: '+' %}
+          {{ number_parts[0] }}<span class="plus-sign" style="font-weight: 900; letter-spacing: 0;">{% if number_parts.size > 1 %}+{% endif %}</span>
+        </div>
         <div class="stat-card__label">{{ section.settings.stat_1_label }}</div>
       </div>
 
@@ -89,7 +92,10 @@
             <path d="M8 7V5C8 4.46957 8.21071 3.96086 8.58579 3.58579C8.96086 3.21071 9.46957 3 10 3H14C14.5304 3 15.0391 3.21071 15.4142 3.58579C15.7893 3.96086 16 4.46957 16 5V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <div class="stat-card__number" data-count="{{ section.settings.stat_2_number }}">{{ section.settings.stat_2_number }}</div>
+        <div class="stat-card__number" data-count="{{ section.settings.stat_2_number }}">
+          {% assign number_parts = section.settings.stat_2_number | split: '+' %}
+          {{ number_parts[0] }}<span class="plus-sign" style="font-weight: 900; letter-spacing: 0;">{% if number_parts.size > 1 %}+{% endif %}</span>
+        </div>
         <div class="stat-card__label">{{ section.settings.stat_2_label }}</div>
       </div>
 
@@ -100,7 +106,10 @@
             <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <div class="stat-card__number" data-count="{{ section.settings.stat_3_number }}">{{ section.settings.stat_3_number }}</div>
+        <div class="stat-card__number" data-count="{{ section.settings.stat_3_number }}">
+          {% assign number_parts = section.settings.stat_3_number | split: '+' %}
+          {{ number_parts[0] }}<span class="plus-sign" style="font-weight: 900; letter-spacing: 0;">{% if number_parts.size > 1 %}+{% endif %}</span>
+        </div>
         <div class="stat-card__label">{{ section.settings.stat_3_label }}</div>
       </div>
 
@@ -111,7 +120,10 @@
             <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <div class="stat-card__number" data-count="{{ section.settings.stat_4_number }}">{{ section.settings.stat_4_number }}</div>
+        <div class="stat-card__number" data-count="{{ section.settings.stat_4_number }}">
+          {% assign number_parts = section.settings.stat_4_number | split: '+' %}
+          {{ number_parts[0] }}<span class="plus-sign" style="font-weight: 900; letter-spacing: 0;">{% if number_parts.size > 1 %}+{% endif %}</span>
+        </div>
         <div class="stat-card__label">{{ section.settings.stat_4_label }}</div>
       </div>
     </div>

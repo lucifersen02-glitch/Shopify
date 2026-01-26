@@ -530,12 +530,35 @@ body {
 
 .stat-card__number {
   font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 800;
+  font-weight: 900;
   margin-bottom: var(--spacing-xs);
   background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  display: inline-block;
+  position: relative;
+}
+
+/* Make the + sign clearer and more visible */
+.stat-card__number .plus-sign {
+  font-weight: 900 !important;
+  letter-spacing: 0 !important;
+  display: inline-block;
+  margin-left: 0.05em;
+  background: linear-gradient(135deg, #fff 0%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
+  position: relative;
 }
 
 .stat-card__label {
