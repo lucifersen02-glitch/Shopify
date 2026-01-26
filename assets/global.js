@@ -383,6 +383,7 @@ function initProductPage() {
   // Product Image Gallery
   const thumbnails = document.querySelectorAll('.product-images__thumbnail');
   const featuredImage = document.getElementById('ProductImage');
+  const imageContainer = document.getElementById('productImageContainer');
   
   if (thumbnails.length > 0 && featuredImage) {
     thumbnails.forEach(thumbnail => {
@@ -394,6 +395,9 @@ function initProductPage() {
         let imageSrc = thumbnailImg.src;
         // Replace thumbnail size with high-res size
         imageSrc = imageSrc.replace(/width=\d+/, 'width=1200');
+        
+        // Get zoom image URL (higher resolution)
+        let zoomImageSrc = imageSrc.replace(/width=\d+/, 'width=2000');
         
         // Create srcset for responsive images
         const srcset = [
@@ -407,12 +411,89 @@ function initProductPage() {
         featuredImage.src = imageSrc;
         featuredImage.srcset = srcset;
         featuredImage.sizes = '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px';
+        featuredImage.setAttribute('data-zoom-image', zoomImageSrc);
+        
+        // Update zoom result image
+        const zoomResultImg = document.getElementById('zoomResultImage');
+        if (zoomResultImg) {
+          zoomResultImg.src = zoomImageSrc;
+        }
         
         // Update active thumbnail
         thumbnails.forEach(t => t.classList.remove('active'));
         this.classList.add('active');
       });
     });
+  }
+
+  // Image Zoom on Hover - Flipkart Style
+  if (imageContainer && featuredImage) {
+    const zoomLens = document.getElementById('zoomLens');
+    const zoomResult = document.getElementById('zoomResult');
+    const zoomResultImg = document.getElementById('zoomResultImage');
+    
+    // Only enable zoom on non-touch devices
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && zoomLens && zoomResult && zoomResultImg) {
+      // Set zoom image
+      const zoomImageSrc = featuredImage.getAttribute('data-zoom-image') || featuredImage.src.replace(/width=\d+/, 'width=2000');
+      zoomResultImg.src = zoomImageSrc;
+      
+      // Lens size (adjustable)
+      const lensSize = 150;
+      zoomLens.style.width = lensSize + 'px';
+      zoomLens.style.height = lensSize + 'px';
+      
+      // Calculate zoom ratio
+      const zoomRatio = 2; // 2x zoom
+      
+      imageContainer.addEventListener('mouseenter', function() {
+        zoomLens.classList.add('active');
+        zoomResult.classList.add('active');
+      });
+      
+      imageContainer.addEventListener('mouseleave', function() {
+        zoomLens.classList.remove('active');
+        zoomResult.classList.remove('active');
+      });
+      
+      imageContainer.addEventListener('mousemove', function(e) {
+        if (!zoomLens.classList.contains('active')) return;
+        
+        const rect = imageContainer.getBoundingClientRect();
+        const containerWidth = rect.width;
+        const containerHeight = rect.height;
+        const imageRect = featuredImage.getBoundingClientRect();
+        
+        // Calculate mouse position relative to container
+        let x = e.clientX - rect.left;
+        let y = e.clientY - rect.top;
+        
+        // Calculate lens position (centered on cursor)
+        let lensX = x - lensSize / 2;
+        let lensY = y - lensSize / 2;
+        
+        // Keep lens within bounds
+        lensX = Math.max(0, Math.min(lensX, containerWidth - lensSize));
+        lensY = Math.max(0, Math.min(lensY, containerHeight - lensSize));
+        
+        zoomLens.style.left = lensX + 'px';
+        zoomLens.style.top = lensY + 'px';
+        
+        // Calculate zoom result position (to the right of image)
+        const zoomResultX = rect.right + 20;
+        const zoomResultY = rect.top;
+        
+        zoomResult.style.left = zoomResultX + 'px';
+        zoomResult.style.top = zoomResultY + 'px';
+        
+        // Calculate background position for zoom result
+        // The zoom image is 2x the size, so we need to adjust the position
+        const bgX = -(lensX * zoomRatio);
+        const bgY = -(lensY * zoomRatio);
+        
+        zoomResultImg.style.transform = `translate(${bgX}px, ${bgY}px)`;
+      });
+    }
   }
 
   // Quantity Controls

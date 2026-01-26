@@ -53,19 +53,24 @@
           <!-- Main Image -->
           {% if product.featured_image %}
             <div class="product-images__main-wrapper">
-              <div class="product-images__main">
-              <img 
-                src="{{ product.featured_image | image_url: width: 1200 }}" 
-                srcset="{{ product.featured_image | image_url: width: 600 }} 600w,
-                        {{ product.featured_image | image_url: width: 900 }} 900w,
-                        {{ product.featured_image | image_url: width: 1200 }} 1200w,
-                        {{ product.featured_image | image_url: width: 1500 }} 1500w"
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
-                alt="{{ product.featured_image.alt | escape }}"
-                class="product-images__featured"
-                id="ProductImage"
-                loading="eager"
-              >
+              <div class="product-images__main" id="productImageContainer">
+                <div class="product-images__zoom-lens" id="zoomLens"></div>
+                <img 
+                  src="{{ product.featured_image | image_url: width: 1200 }}" 
+                  srcset="{{ product.featured_image | image_url: width: 600 }} 600w,
+                          {{ product.featured_image | image_url: width: 900 }} 900w,
+                          {{ product.featured_image | image_url: width: 1200 }} 1200w,
+                          {{ product.featured_image | image_url: width: 1500 }} 1500w"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px"
+                  alt="{{ product.featured_image.alt | escape }}"
+                  class="product-images__featured"
+                  id="ProductImage"
+                  loading="eager"
+                  data-zoom-image="{{ product.featured_image | image_url: width: 2000 }}"
+                >
+                <div class="product-images__zoom-result" id="zoomResult">
+                  <img id="zoomResultImage" src="" alt="">
+                </div>
               </div>
               
               <!-- Add to Cart & Buy Now Buttons Below Image -->
