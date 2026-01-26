@@ -388,10 +388,25 @@ function initProductPage() {
     thumbnails.forEach(thumbnail => {
       thumbnail.addEventListener('click', function() {
         const imageIndex = this.getAttribute('data-image-index');
-        const imageSrc = this.querySelector('img').src.replace('width=150', 'width=800');
+        const thumbnailImg = this.querySelector('img');
         
-        // Update featured image
+        // Get high-resolution image URL
+        let imageSrc = thumbnailImg.src;
+        // Replace thumbnail size with high-res size
+        imageSrc = imageSrc.replace(/width=\d+/, 'width=1200');
+        
+        // Create srcset for responsive images
+        const srcset = [
+          imageSrc.replace(/width=\d+/, 'width=600') + ' 600w',
+          imageSrc.replace(/width=\d+/, 'width=900') + ' 900w',
+          imageSrc.replace(/width=\d+/, 'width=1200') + ' 1200w',
+          imageSrc.replace(/width=\d+/, 'width=1500') + ' 1500w'
+        ].join(', ');
+        
+        // Update featured image with high resolution
         featuredImage.src = imageSrc;
+        featuredImage.srcset = srcset;
+        featuredImage.sizes = '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px';
         
         // Update active thumbnail
         thumbnails.forEach(t => t.classList.remove('active'));
