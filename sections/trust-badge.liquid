@@ -1,0 +1,40 @@
+{% schema %}
+{
+  "name": "Trust Badge",
+  "settings": [
+    {
+      "type": "text",
+      "id": "rating",
+      "label": "Rating",
+      "default": "4.8"
+    },
+    {
+      "type": "text",
+      "id": "customer_count",
+      "label": "Customer Count",
+      "default": "50,000+"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Customers"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust Badge"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="trust-badge">
+  <div class="container">
+    <div class="trust-badge__content">
+      <span class="trust-badge__rating">Excellent {{ section.settings.rating }}</span>
+      <span class="trust-badge__separator">|</span>
+      <span class="trust-badge__customers">{{ section.settings.customer_count }} {{ section.settings.label }}</span>
+    </div>
+  </div>
+</div>

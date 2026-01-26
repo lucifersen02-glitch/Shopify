@@ -1,18 +1,29 @@
 {% schema %}
 {
-  "name": "About Section",
+  "name": "Our Story",
   "settings": [
     {
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "About Us"
+      "default": "Our Story"
     },
     {
       "type": "richtext",
       "id": "content",
-      "label": "Content",
-      "default": "<p>At PerfectFinds, we are passionate about curating high-quality products that make a difference in your daily life. Our commitment to excellence and customer satisfaction drives everything we do.</p><p>We carefully select each item in our collection, ensuring that every product meets our high standards for quality, functionality, and value. Whether you're looking for everyday essentials or unique finds, PerfectFinds is your trusted partner in discovering products that truly matter.</p>"
+      "label": "Story Content",
+      "default": "<p>Fed up with seeing my loved ones suffer from chronic pain and illnesses, I set out to find a solution. Shocked by the poor quality of options available, I decided to take matters into my own hands.</p><p>After making prototypes from old towels (they looked awful), I'm not exaggerating when I say my girlfriend, mum, and sister wore their products every day.</p><p>It felt amazing to see how this transformed them from being in pain and uncomfortable to feeling relaxed and comforted. After testing 160+ fabrics and 39 prototypes, we created our products. Now, you and your loved ones can experience its comfort and relief too.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
     },
     {
       "type": "image_picker",
@@ -22,13 +33,13 @@
   ],
   "presets": [
     {
-      "name": "About Section"
+      "name": "Our Story"
     }
   ]
 }
 {% endschema %}
 
-<section id="about" class="about">
+<section id="about" class="about our-story">
   <div class="container">
     <div class="about__content">
       <div class="about__text">
@@ -36,6 +47,14 @@
         <div class="about__description">
           {{ section.settings.content }}
         </div>
+        {% if section.settings.button_link != blank %}
+          <a href="{{ section.settings.button_link }}" class="button button--primary about__button">
+            {{ section.settings.button_text }}
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        {% endif %}
       </div>
       {% if section.settings.image %}
         <div class="about__image">

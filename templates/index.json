@@ -6,20 +6,26 @@
     "hero": {
       "type": "hero"
     },
-    "stats": {
-      "type": "stats"
+    "trust_badge": {
+      "type": "trust-badge"
     },
     "featured_products": {
       "type": "featured-products"
     },
-    "testimonials": {
-      "type": "testimonials"
+    "about": {
+      "type": "about"
     },
     "features": {
       "type": "features"
     },
-    "about": {
-      "type": "about"
+    "social_proof_banner": {
+      "type": "social-proof-banner"
+    },
+    "testimonials": {
+      "type": "testimonials"
+    },
+    "stats": {
+      "type": "stats"
     },
     "contact": {
       "type": "contact"
@@ -31,11 +37,13 @@
   "order": [
     "header",
     "hero",
+    "trust_badge",
     "featured_products",
-    "stats",
-    "testimonials",
-    "features",
     "about",
+    "features",
+    "social_proof_banner",
+    "testimonials",
+    "stats",
     "contact",
     "footer"
   ]

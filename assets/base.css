@@ -2727,6 +2727,142 @@ body {
   }
 }
 
+/* Trust Badge Section */
+.trust-badge {
+  padding: var(--spacing-sm) 0;
+  background: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.trust-badge__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.trust-badge__rating {
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.trust-badge__separator {
+  color: var(--color-text-light);
+  opacity: 0.5;
+}
+
+.trust-badge__customers {
+  color: var(--color-text);
+}
+
+/* Social Proof Banner - Scrolling Text */
+.social-proof-banner {
+  background: var(--color-gradient-1);
+  padding: var(--spacing-md) 0;
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
+}
+
+.social-proof-banner__content {
+  display: flex;
+  gap: var(--spacing-xl);
+  animation: scroll-text 30s linear infinite;
+}
+
+.social-proof-banner__content[data-speed="1"] {
+  animation-duration: 60s;
+}
+
+.social-proof-banner__content[data-speed="2"] {
+  animation-duration: 50s;
+}
+
+.social-proof-banner__content[data-speed="3"] {
+  animation-duration: 40s;
+}
+
+.social-proof-banner__content[data-speed="4"] {
+  animation-duration: 35s;
+}
+
+.social-proof-banner__content[data-speed="5"] {
+  animation-duration: 30s;
+}
+
+.social-proof-banner__content[data-speed="6"] {
+  animation-duration: 25s;
+}
+
+.social-proof-banner__content[data-speed="7"] {
+  animation-duration: 20s;
+}
+
+.social-proof-banner__content[data-speed="8"] {
+  animation-duration: 15s;
+}
+
+.social-proof-banner__content[data-speed="9"] {
+  animation-duration: 12s;
+}
+
+.social-proof-banner__content[data-speed="10"] {
+  animation-duration: 10s;
+}
+
+.social-proof-banner__text {
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  flex-shrink: 0;
+}
+
+@keyframes scroll-text {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Our Story Section */
+.our-story {
+  padding: var(--spacing-xl) 0;
+  background: white;
+}
+
+.our-story .about__content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.our-story .section-heading {
+  text-align: left;
+  margin-bottom: var(--spacing-md);
+  font-size: clamp(2rem, 4vw, 2.5rem);
+}
+
+.our-story .about__description {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: var(--color-text);
+  margin-bottom: var(--spacing-lg);
+}
+
+.our-story .about__description p {
+  margin-bottom: var(--spacing-md);
+}
+
+.our-story .about__button {
+  margin-top: var(--spacing-md);
+}
+
 /* Accessibility */
 .visually-hidden {
   position: absolute;
