@@ -12,9 +12,6 @@
     "featured_products": {
       "type": "featured-products"
     },
-    "about": {
-      "type": "about"
-    },
     "features": {
       "type": "features"
     },
