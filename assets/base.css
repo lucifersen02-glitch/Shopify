@@ -2880,15 +2880,15 @@ body {
 @media (max-width: 768px) {
   .trust-badge {
     margin-top: -50px;
-    padding-top: calc(0.5rem + 50px);
-    padding-bottom: 0.5rem;
+    padding-top: calc(0.6rem + 50px);
+    padding-bottom: 0.6rem;
   }
 
   .trust-badge__content {
     font-size: 0.8125rem;
     flex-wrap: wrap;
     gap: var(--spacing-xs);
-    padding: 0.4rem 0;
+    padding: 0.3rem 0;
   }
 
   .social-proof-banner {
@@ -2936,8 +2936,8 @@ body {
 
   .trust-badge {
     margin-top: -50px;
-    padding-top: calc(0.5rem + 50px);
-    padding-bottom: 0.5rem;
+    padding-top: calc(0.6rem + 50px);
+    padding-bottom: 0.6rem;
   }
 }
 
@@ -2969,30 +2969,69 @@ body {
 
   .trust-badge {
     margin-top: -40px;
-    padding-top: calc(0.5rem + 40px);
-    padding-bottom: 0.5rem;
+    padding-top: calc(0.6rem + 40px);
+    padding-bottom: 0.6rem;
   }
 }
 
 /* Trust Badge Section */
 .trust-badge {
   padding: 0;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(15px) saturate(1.1);
-  -webkit-backdrop-filter: blur(15px) saturate(1.1);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background: transparent;
   position: relative;
   z-index: 2;
   margin-top: -80px;
-  padding-top: calc(0.75rem + 80px);
-  padding-bottom: 0.75rem;
+  padding-top: calc(1rem + 80px);
+  padding-bottom: 1rem;
   transition: all 0.6s ease;
   min-height: auto;
+  overflow: hidden;
+}
+
+/* Gradient background: transparent at top/bottom, opaque in middle */
+.trust-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 20%,
+    rgba(255, 255, 255, 0.85) 40%,
+    rgba(255, 255, 255, 0.9) 50%,
+    rgba(255, 255, 255, 0.85) 60%,
+    rgba(255, 255, 255, 0.3) 80%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  backdrop-filter: blur(15px) saturate(1.1);
+  -webkit-backdrop-filter: blur(15px) saturate(1.1);
+  z-index: -1;
+}
+
+.trust-badge::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.05) 50%,
+    transparent 100%
+  );
+  z-index: 0;
 }
 
 .trust-badge .container {
   padding-top: 0;
   padding-bottom: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .trust-badge__content {
@@ -3003,7 +3042,7 @@ body {
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--color-text);
-  padding: 0.5rem 0;
+  padding: 0.4rem 0;
   line-height: 1.2;
 }
 
