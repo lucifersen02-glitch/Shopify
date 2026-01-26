@@ -113,22 +113,7 @@
             </div>
           {% endif %}
 
-          <div class="product-info__rating">
-            <div class="product-rating">
-              <span class="product-rating__score">4.5</span>
-              <div class="product-rating__stars">
-                {% for i in (1..5) %}
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="{% if i <= 4 %}currentColor{% else %}none{% endif %}" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                  </svg>
-                {% endfor %}
-              </div>
-              <span class="product-rating__text">4,225 Ratings & 226 Reviews</span>
-            </div>
-          </div>
-
           <div class="product-info__price">
-            <div class="product-price__offer">Extra ₹5000 off</div>
             <div class="product-price">
               <span class="product-price__current">{{ product.selected_or_first_available_variant.price | money }}</span>
               {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
@@ -137,56 +122,6 @@
                   {{ product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price | times: 100.0 | divided_by: product.selected_or_first_available_variant.compare_at_price | round }}% off
                 </span>
               {% endif %}
-            </div>
-            <div class="product-price__info">
-              <span>+ ₹156 Protect Promise Fee</span>
-              <a href="#" class="product-price__learn-more">Learn more</a>
-            </div>
-            <div class="product-delivery">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2"/>
-              </svg>
-              <span>Secure delivery by 29 Jan, Thursday</span>
-            </div>
-          </div>
-
-          <!-- Offers Section -->
-          <div class="product-offers">
-            <div class="product-offers__title">Available offers</div>
-            <div class="product-offers__list">
-              <div class="product-offer">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 11L12 14L22 4" stroke="#388e3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="#388e3c" stroke-width="2"/>
-                </svg>
-                <span>Bank Offer 5% cashback on Axis Bank Flipkart Debit Card up to ₹750 <a href="#">T&C</a></span>
-              </div>
-              <div class="product-offer">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 11L12 14L22 4" stroke="#388e3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="#388e3c" stroke-width="2"/>
-                </svg>
-                <span>Special Price Get extra ₹5000 off <a href="#">T&C</a></span>
-              </div>
-              <div class="product-offer">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 11L12 14L22 4" stroke="#388e3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="#388e3c" stroke-width="2"/>
-                </svg>
-                <span>Free Shipping on orders over ₹50</span>
-              </div>
-              <a href="#" class="product-offers__more">View 9 more offers</a>
-            </div>
-          </div>
-
-          <!-- Highlights Section -->
-          <div class="product-highlights">
-            <div class="product-highlights__title">Highlights</div>
-            <div class="product-highlights__list">
-              <div class="product-highlight">Premium Quality Materials</div>
-              <div class="product-highlight">Easy DIY Installation</div>
-              <div class="product-highlight">Removable Without Damage</div>
-              <div class="product-highlight">Modern Geometric Design</div>
             </div>
           </div>
 
@@ -231,19 +166,6 @@
               </div>
             </div>
 
-            <!-- Delivery Section -->
-            <div class="product-delivery-section">
-              <div class="product-delivery__title">Delivery</div>
-              <div class="product-delivery__input-group">
-                <input type="text" placeholder="Enter Delivery Pincode" class="product-delivery__input" maxlength="6">
-                <button type="button" class="product-delivery__check">Check</button>
-              </div>
-              <div class="product-delivery__info">
-                <div class="product-delivery__date">Delivery by <strong>29 Jan, Thursday</strong></div>
-                <div class="product-delivery__note">if ordered before 8:29 PM</div>
-              </div>
-            </div>
-
             <div class="product-form__actions">
               <button 
                 type="submit" 
@@ -277,31 +199,6 @@
               <p class="product-form__sold-out">This product is currently sold out.</p>
             {% endunless %}
           </form>
-
-          <div class="product-info__features">
-            <div class="product-features-list">
-              <div class="product-features-list__item">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 11L12 14L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span>Free Shipping on orders over $50</span>
-              </div>
-              <div class="product-features-list__item">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span>30-Day Return Policy</span>
-              </div>
-              <div class="product-features-list__item">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span>Premium Quality Guaranteed</span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
