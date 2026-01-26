@@ -1,34 +1,122 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "header": {
-      "type": "header"
+      "type": "header",
+      "settings": {
+        "logo_text": "PerfectFinds"
+      }
     },
     "hero": {
-      "type": "hero"
+      "type": "hero",
+      "settings": {
+        "slide_1_heading": "Welcome to PerfectFinds",
+        "slide_1_description": "Discover amazing products crafted with care and quality.",
+        "slide_1_button_text": "Shop Now",
+        "slide_1_button_link": "",
+        "slide_1_image": "shopify://shop_images/thick-lush-green-forest.jpg",
+        "slide_2_heading": "Premium Quality Products",
+        "slide_2_description": "Handpicked items that bring value to your everyday life.",
+        "slide_2_button_text": "Explore Collection",
+        "slide_2_button_link": "",
+        "slide_3_heading": "Special Offers & Deals",
+        "slide_3_description": "Limited time offers on selected items. Don't miss out!",
+        "slide_3_button_text": "View Deals",
+        "slide_3_button_link": ""
+      }
     },
     "trust_badge": {
-      "type": "trust-badge"
+      "type": "trust-badge",
+      "settings": {
+        "rating": "4.8",
+        "customer_count": "50,000+",
+        "label": "Customers"
+      }
     },
     "featured_products": {
-      "type": "featured-products"
+      "type": "featured-products",
+      "settings": {
+        "heading": "Best Sellers",
+        "collection": "",
+        "products_to_show": 4
+      }
     },
     "features": {
-      "type": "features"
+      "type": "features",
+      "settings": {
+        "heading": "Why Shop With Us",
+        "feature_1_title": "Free Shipping",
+        "feature_1_description": "Free shipping on orders over $50",
+        "feature_2_title": "Secure Payment",
+        "feature_2_description": "100% secure payment processing",
+        "feature_3_title": "Easy Returns",
+        "feature_3_description": "30-day hassle-free returns",
+        "feature_4_title": "Quality Guaranteed",
+        "feature_4_description": "Premium quality products only"
+      }
     },
     "social_proof_banner": {
-      "type": "social-proof-banner"
+      "type": "social-proof-banner",
+      "settings": {
+        "text": "JOIN 50,000+ HAPPY CUSTOMERS!",
+        "speed": 5
+      }
     },
     "testimonials": {
-      "type": "testimonials"
+      "type": "testimonials",
+      "settings": {
+        "heading": "What Our Customers Say",
+        "subheading": "Don't just take our word for it - hear from our satisfied customers",
+        "testimonial_1_name": "Sarah Johnson",
+        "testimonial_1_role": "Verified Buyer",
+        "testimonial_1_text": "I've been shopping at PerfectFinds for over a year now, and I'm always impressed by the quality of products and excellent customer service. Highly recommended!",
+        "testimonial_1_rating": 5,
+        "testimonial_2_name": "Michael Chen",
+        "testimonial_2_role": "Verified Buyer",
+        "testimonial_2_text": "PerfectFinds has become my go-to store for unique and quality products. The shipping is fast, packaging is great, and the products always exceed my expectations!",
+        "testimonial_2_rating": 5,
+        "testimonial_3_name": "Emily Rodriguez",
+        "testimonial_3_role": "Verified Buyer",
+        "testimonial_3_text": "Amazing shopping experience! The website is easy to navigate, checkout is smooth, and I received my order earlier than expected. Will definitely shop again!",
+        "testimonial_3_rating": 5
+      }
     },
     "stats": {
-      "type": "stats"
+      "type": "stats",
+      "settings": {
+        "heading": "Why Choose Us",
+        "stat_1_number": "10K+",
+        "stat_1_label": "Happy Customers",
+        "stat_2_number": "500+",
+        "stat_2_label": "Products",
+        "stat_3_number": "50+",
+        "stat_3_label": "Countries",
+        "stat_4_number": "24/7",
+        "stat_4_label": "Support"
+      }
     },
     "contact": {
-      "type": "contact"
+      "type": "contact",
+      "settings": {
+        "heading": "Get in Touch",
+        "description": "Have a question? We'd love to hear from you. Send us a message and we'll respond as soon as possible.",
+        "email": "contact@example.com",
+        "phone": "+1 (555) 123-4567"
+      }
     },
     "footer": {
-      "type": "footer"
+      "type": "footer",
+      "settings": {
+        "footer_text": "© 2026 PerfectFinds. All rights reserved."
+      }
     }
   },
   "order": [
