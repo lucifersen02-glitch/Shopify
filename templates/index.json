@@ -12,6 +12,9 @@
     "featured_products": {
       "type": "featured-products"
     },
+    "testimonials": {
+      "type": "testimonials"
+    },
     "features": {
       "type": "features"
     },
@@ -30,6 +33,7 @@
     "hero",
     "stats",
     "featured_products",
+    "testimonials",
     "features",
     "about",
     "contact",

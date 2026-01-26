@@ -1,0 +1,238 @@
+{% schema %}
+{
+  "name": "Testimonials Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What Our Customers Say"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Don't just take our word for it - hear from our satisfied customers"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_1_name",
+      "label": "Testimonial 1 Customer Name",
+      "default": "Sarah Johnson"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_1_role",
+      "label": "Testimonial 1 Role",
+      "default": "Verified Buyer"
+    },
+    {
+      "type": "textarea",
+      "id": "testimonial_1_text",
+      "label": "Testimonial 1 Text",
+      "default": "I've been shopping at PerfectFinds for over a year now, and I'm always impressed by the quality of products and excellent customer service. Highly recommended!"
+    },
+    {
+      "type": "range",
+      "id": "testimonial_1_rating",
+      "label": "Testimonial 1 Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "image_picker",
+      "id": "testimonial_1_avatar",
+      "label": "Testimonial 1 Avatar"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_2_name",
+      "label": "Testimonial 2 Customer Name",
+      "default": "Michael Chen"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_2_role",
+      "label": "Testimonial 2 Role",
+      "default": "Verified Buyer"
+    },
+    {
+      "type": "textarea",
+      "id": "testimonial_2_text",
+      "label": "Testimonial 2 Text",
+      "default": "PerfectFinds has become my go-to store for unique and quality products. The shipping is fast, packaging is great, and the products always exceed my expectations!"
+    },
+    {
+      "type": "range",
+      "id": "testimonial_2_rating",
+      "label": "Testimonial 2 Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "image_picker",
+      "id": "testimonial_2_avatar",
+      "label": "Testimonial 2 Avatar"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_3_name",
+      "label": "Testimonial 3 Customer Name",
+      "default": "Emily Rodriguez"
+    },
+    {
+      "type": "text",
+      "id": "testimonial_3_role",
+      "label": "Testimonial 3 Role",
+      "default": "Verified Buyer"
+    },
+    {
+      "type": "textarea",
+      "id": "testimonial_3_text",
+      "label": "Testimonial 3 Text",
+      "default": "Amazing shopping experience! The website is easy to navigate, checkout is smooth, and I received my order earlier than expected. Will definitely shop again!"
+    },
+    {
+      "type": "range",
+      "id": "testimonial_3_rating",
+      "label": "Testimonial 3 Rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "image_picker",
+      "id": "testimonial_3_avatar",
+      "label": "Testimonial 3 Avatar"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials Section"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="testimonials-section">
+  <div class="container">
+    <div class="testimonials-header">
+      <h2 class="section-heading">{{ section.settings.heading }}</h2>
+      {% if section.settings.subheading != blank %}
+        <p class="testimonials-subheading">{{ section.settings.subheading }}</p>
+      {% endif %}
+    </div>
+    
+    <div class="testimonials-grid">
+      <!-- Testimonial 1 -->
+      <div class="testimonial-card" data-animate="fade-up">
+        <div class="testimonial-card__content">
+          <div class="testimonial-card__rating">
+            {% for i in (1..5) %}
+              {% if i <= section.settings.testimonial_1_rating %}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                </svg>
+              {% else %}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                </svg>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <p class="testimonial-card__text">"{{ section.settings.testimonial_1_text }}"</p>
+        </div>
+        <div class="testimonial-card__author">
+          <div class="testimonial-card__avatar">
+            {% if section.settings.testimonial_1_avatar %}
+              {{ section.settings.testimonial_1_avatar | image_url: width: 80 | image_tag: loading: 'lazy', alt: section.settings.testimonial_1_name }}
+            {% else %}
+              <div class="testimonial-card__avatar-placeholder">
+                {{ section.settings.testimonial_1_name | slice: 0 }}
+              </div>
+            {% endif %}
+          </div>
+          <div class="testimonial-card__info">
+            <h4 class="testimonial-card__name">{{ section.settings.testimonial_1_name }}</h4>
+            <p class="testimonial-card__role">{{ section.settings.testimonial_1_role }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 2 -->
+      <div class="testimonial-card" data-animate="fade-up" data-delay="0.1">
+        <div class="testimonial-card__content">
+          <div class="testimonial-card__rating">
+            {% for i in (1..5) %}
+              {% if i <= section.settings.testimonial_2_rating %}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                </svg>
+              {% else %}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                </svg>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <p class="testimonial-card__text">"{{ section.settings.testimonial_2_text }}"</p>
+        </div>
+        <div class="testimonial-card__author">
+          <div class="testimonial-card__avatar">
+            {% if section.settings.testimonial_2_avatar %}
+              {{ section.settings.testimonial_2_avatar | image_url: width: 80 | image_tag: loading: 'lazy', alt: section.settings.testimonial_2_name }}
+            {% else %}
+              <div class="testimonial-card__avatar-placeholder">
+                {{ section.settings.testimonial_2_name | slice: 0 }}
+              </div>
+            {% endif %}
+          </div>
+          <div class="testimonial-card__info">
+            <h4 class="testimonial-card__name">{{ section.settings.testimonial_2_name }}</h4>
+            <p class="testimonial-card__role">{{ section.settings.testimonial_2_role }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 3 -->
+      <div class="testimonial-card" data-animate="fade-up" data-delay="0.2">
+        <div class="testimonial-card__content">
+          <div class="testimonial-card__rating">
+            {% for i in (1..5) %}
+              {% if i <= section.settings.testimonial_3_rating %}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                </svg>
+              {% else %}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                </svg>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <p class="testimonial-card__text">"{{ section.settings.testimonial_3_text }}"</p>
+        </div>
+        <div class="testimonial-card__author">
+          <div class="testimonial-card__avatar">
+            {% if section.settings.testimonial_3_avatar %}
+              {{ section.settings.testimonial_3_avatar | image_url: width: 80 | image_tag: loading: 'lazy', alt: section.settings.testimonial_3_name }}
+            {% else %}
+              <div class="testimonial-card__avatar-placeholder">
+                {{ section.settings.testimonial_3_name | slice: 0 }}
+              </div>
+            {% endif %}
+          </div>
+          <div class="testimonial-card__info">
+            <h4 class="testimonial-card__name">{{ section.settings.testimonial_3_name }}</h4>
+            <p class="testimonial-card__role">{{ section.settings.testimonial_3_role }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

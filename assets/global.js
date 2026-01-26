@@ -240,6 +240,11 @@ document.addEventListener('DOMContentLoaded', function() {
           entry.target.classList.add('animated');
         }
 
+        // Handle testimonial cards
+        if (entry.target.classList.contains('testimonial-card')) {
+          entry.target.classList.add('animated');
+        }
+
         // Handle sections
         entry.target.style.opacity = '1';
         entry.target.style.transform = 'translateY(0)';
@@ -248,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }, observerOptions);
 
   // Observe all sections and animated elements
-  const sections = document.querySelectorAll('.featured-products, .about, .contact, .stats-section, .features-section');
+  const sections = document.querySelectorAll('.featured-products, .about, .contact, .stats-section, .features-section, .testimonials-section');
   sections.forEach(section => {
     section.style.opacity = '0';
     section.style.transform = 'translateY(30px)';
@@ -271,6 +276,12 @@ document.addEventListener('DOMContentLoaded', function() {
   // Observe product cards
   const productCards = document.querySelectorAll('.product-card');
   productCards.forEach(card => {
+    observer.observe(card);
+  });
+
+  // Observe testimonial cards
+  const testimonialCards = document.querySelectorAll('.testimonial-card');
+  testimonialCards.forEach(card => {
     observer.observe(card);
   });
 
