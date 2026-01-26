@@ -27,10 +27,12 @@
         "slide_2_description": "Handpicked items that bring value to your everyday life.",
         "slide_2_button_text": "Explore Collection",
         "slide_2_button_link": "",
+        "slide_2_image": "shopify://shop_images/friends-sunbathing.jpg",
         "slide_3_heading": "Special Offers & Deals",
         "slide_3_description": "Limited time offers on selected items. Don't miss out!",
         "slide_3_button_text": "View Deals",
-        "slide_3_button_link": ""
+        "slide_3_button_link": "",
+        "slide_3_image": "shopify://shop_images/a-woman-in-her-shop.jpg"
       }
     },
     "trust_badge": {
