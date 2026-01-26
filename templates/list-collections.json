@@ -3,8 +3,8 @@
     "header": {
       "type": "header"
     },
-    "collection_products": {
-      "type": "collection-products"
+    "all_products": {
+      "type": "all-products"
     },
     "footer": {
       "type": "footer"
@@ -12,7 +12,7 @@
   },
   "order": [
     "header",
-    "collection_products",
+    "all_products",
     "footer"
   ]
 }

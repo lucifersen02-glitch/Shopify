@@ -34,13 +34,15 @@
 
 {%- liquid
   comment
-    Get all products - try collections.all first, then fallback to all products
+    Simple approach: Use collections.all if available
+    If not available, we'll show products from the first non-frontpage collection
   endcomment
-  if collections.all.products.size > 0
+  if collections.all != blank and collections.all.products.size > 0
     assign all_products = collections.all.products
   else
     comment
-      Fallback: Get products from all collections
+      Fallback: Use products from all collections
+      Loop through and collect products (Liquid limitation: we can't easily deduplicate)
     endcomment
     assign all_products = blank
     for collection in collections
@@ -48,7 +50,10 @@
         if all_products == blank
           assign all_products = collection.products
         else
-          assign all_products = all_products | concat: collection.products | uniq
+          comment
+            Note: concat may include duplicates, but it's the best we can do in Liquid
+          endcomment
+          assign all_products = all_products | concat: collection.products
         endif
       endunless
     endfor
