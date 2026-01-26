@@ -1,0 +1,11 @@
+# Git Commit Message Template
+# Format: [Type] Brief description
+# 
+# Types:
+# - feat: New feature
+# - fix: Bug fix
+# - style: Formatting changes
+# - refactor: Code restructuring
+# - perf: Performance improvements
+# - docs: Documentation updates
+# - revert: Revert previous commit

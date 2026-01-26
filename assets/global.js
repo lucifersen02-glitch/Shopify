@@ -373,4 +373,150 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+
+  // Product Page Functionality
+  initProductPage();
 });
+
+// Product Page Functions
+function initProductPage() {
+  // Product Image Gallery
+  const thumbnails = document.querySelectorAll('.product-images__thumbnail');
+  const featuredImage = document.getElementById('ProductImage');
+  
+  if (thumbnails.length > 0 && featuredImage) {
+    thumbnails.forEach(thumbnail => {
+      thumbnail.addEventListener('click', function() {
+        const imageIndex = this.getAttribute('data-image-index');
+        const imageSrc = this.querySelector('img').src.replace('width=150', 'width=800');
+        
+        // Update featured image
+        featuredImage.src = imageSrc;
+        
+        // Update active thumbnail
+        thumbnails.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  }
+
+  // Quantity Controls
+  const quantityInput = document.querySelector('.product-form__quantity-input');
+  const decreaseBtn = document.querySelector('[data-action="decrease"]');
+  const increaseBtn = document.querySelector('[data-action="increase"]');
+
+  if (quantityInput && decreaseBtn && increaseBtn) {
+    decreaseBtn.addEventListener('click', () => {
+      const currentValue = parseInt(quantityInput.value) || 1;
+      if (currentValue > 1) {
+        quantityInput.value = currentValue - 1;
+      }
+    });
+
+    increaseBtn.addEventListener('click', () => {
+      const currentValue = parseInt(quantityInput.value) || 1;
+      quantityInput.value = currentValue + 1;
+    });
+
+    quantityInput.addEventListener('change', function() {
+      const value = parseInt(this.value) || 1;
+      if (value < 1) {
+        this.value = 1;
+      }
+    });
+  }
+
+  // Variant Selection
+  const variantButtons = document.querySelectorAll('.product-form__option-value');
+  const variantIdInput = document.getElementById('product-variant-id');
+  
+  if (variantButtons.length > 0) {
+    // This would need to be populated with actual variant data from Shopify
+    // For now, we'll just handle the UI interaction
+    variantButtons.forEach(button => {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        const option = this.getAttribute('data-option');
+        const value = this.getAttribute('data-value');
+        
+        // Remove active class from siblings
+        const siblings = this.parentElement.querySelectorAll('.product-form__option-value');
+        siblings.forEach(sibling => {
+          if (sibling.getAttribute('data-option') === option) {
+            sibling.classList.remove('active');
+          }
+        });
+        
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        // Here you would update the variant ID based on selected options
+        // This requires Shopify's variant selection logic
+      });
+    });
+  }
+
+  // Add to Cart Form Submission
+  const productForm = document.getElementById('product-form');
+  if (productForm) {
+    productForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const submitButton = this.querySelector('#AddToCart');
+      const originalText = submitButton.innerHTML;
+      
+      // Disable button and show loading state
+      submitButton.disabled = true;
+      submitButton.innerHTML = '<span>Adding to Cart...</span>';
+      
+      const formData = new FormData(this);
+      
+      try {
+        const response = await fetch(window.routes.cart_add_url, {
+          method: 'POST',
+          body: formData
+        });
+        
+        if (response.ok) {
+          // Show success message
+          submitButton.innerHTML = '<span>✓ Added to Cart!</span>';
+          submitButton.style.background = 'var(--color-success)';
+          
+          // Update cart count
+          updateCartCount();
+          
+          // Redirect to cart or show notification
+          setTimeout(() => {
+            window.location.href = window.routes.cart_url;
+          }, 1000);
+        } else {
+          throw new Error('Failed to add to cart');
+        }
+      } catch (error) {
+        console.error('Error adding to cart:', error);
+        submitButton.innerHTML = originalText;
+        submitButton.disabled = false;
+        alert('Failed to add product to cart. Please try again.');
+      }
+    });
+  }
+
+  // Update cart count
+  function updateCartCount() {
+    fetch(window.routes.cart_url + '.js')
+      .then(response => response.json())
+      .then(cart => {
+        const cartCount = document.querySelector('.header__cart-count');
+        if (cartCount) {
+          const itemCount = cart.item_count || 0;
+          if (itemCount > 0) {
+            cartCount.textContent = itemCount;
+            cartCount.style.display = 'flex';
+          } else {
+            cartCount.style.display = 'none';
+          }
+        }
+      })
+      .catch(error => console.error('Error updating cart count:', error));
+  }
+}

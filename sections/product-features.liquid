@@ -1,0 +1,116 @@
+{% schema %}
+{
+  "name": "Product Features",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Product Features"
+    },
+    {
+      "type": "richtext",
+      "id": "feature_1_title",
+      "label": "Feature 1 Title",
+      "default": "<p>High Quality Materials</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "feature_1_description",
+      "label": "Feature 1 Description",
+      "default": "Made with premium materials for durability and long-lasting performance."
+    },
+    {
+      "type": "richtext",
+      "id": "feature_2_title",
+      "label": "Feature 2 Title",
+      "default": "<p>Easy to Use</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "feature_2_description",
+      "label": "Feature 2 Description",
+      "default": "User-friendly design that makes it simple and convenient for everyday use."
+    },
+    {
+      "type": "richtext",
+      "id": "feature_3_title",
+      "label": "Feature 3 Title",
+      "default": "<p>Eco-Friendly</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "feature_3_description",
+      "label": "Feature 3 Description",
+      "default": "Environmentally conscious design with sustainable materials and processes."
+    },
+    {
+      "type": "richtext",
+      "id": "feature_4_title",
+      "label": "Feature 4 Title",
+      "default": "<p>Warranty Included</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "feature_4_description",
+      "label": "Feature 4 Description",
+      "default": "Comes with manufacturer warranty for your peace of mind."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Features"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="product-features-section">
+  <div class="container">
+    <h2 class="section-heading">{{ section.settings.heading }}</h2>
+    <div class="product-features-grid">
+      <div class="product-feature-card" data-animate="fade-up">
+        <div class="product-feature-card__icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="product-feature-card__title">{{ section.settings.feature_1_title }}</h3>
+        <p class="product-feature-card__description">{{ section.settings.feature_1_description }}</p>
+      </div>
+
+      <div class="product-feature-card" data-animate="fade-up" data-delay="0.1">
+        <div class="product-feature-card__icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 11L12 14L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="product-feature-card__title">{{ section.settings.feature_2_title }}</h3>
+        <p class="product-feature-card__description">{{ section.settings.feature_2_description }}</p>
+      </div>
+
+      <div class="product-feature-card" data-animate="fade-up" data-delay="0.2">
+        <div class="product-feature-card__icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="product-feature-card__title">{{ section.settings.feature_3_title }}</h3>
+        <p class="product-feature-card__description">{{ section.settings.feature_3_description }}</p>
+      </div>
+
+      <div class="product-feature-card" data-animate="fade-up" data-delay="0.3">
+        <div class="product-feature-card__icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="product-feature-card__title">{{ section.settings.feature_4_title }}</h3>
+        <p class="product-feature-card__description">{{ section.settings.feature_4_description }}</p>
+      </div>
+    </div>
+  </div>
+</section>

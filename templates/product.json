@@ -1,0 +1,30 @@
+{
+  "sections": {
+    "header": {
+      "type": "header"
+    },
+    "product_main": {
+      "type": "product-main"
+    },
+    "product_features": {
+      "type": "product-features"
+    },
+    "product_description": {
+      "type": "product-description"
+    },
+    "related_products": {
+      "type": "related-products"
+    },
+    "footer": {
+      "type": "footer"
+    }
+  },
+  "order": [
+    "header",
+    "product_main",
+    "product_features",
+    "product_description",
+    "related_products",
+    "footer"
+  ]
+}

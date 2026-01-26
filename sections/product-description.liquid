@@ -1,0 +1,52 @@
+{% schema %}
+{
+  "name": "Product Description",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Product Details"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_full_description",
+      "label": "Show full description",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Description"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="product-description-section">
+  <div class="container">
+    <div class="product-description">
+      <h2 class="section-heading">{{ section.settings.heading }}</h2>
+      <div class="product-description__content">
+        {% if section.settings.show_full_description %}
+          <div class="product-description__full">
+            {{ product.description }}
+          </div>
+        {% else %}
+          <div class="product-description__short">
+            {{ product.description | strip_html | truncatewords: 100 }}
+          </div>
+        {% endif %}
+      </div>
+
+      {% if product.metafields.custom.product_specifications != blank %}
+        <div class="product-specifications">
+          <h3 class="product-specifications__title">Specifications</h3>
+          <div class="product-specifications__content">
+            {{ product.metafields.custom.product_specifications }}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
