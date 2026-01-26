@@ -3160,6 +3160,7 @@ body {
   display: flex;
   gap: var(--spacing-xl);
   animation: scroll-text 30s linear infinite;
+  align-items: center;
 }
 
 .social-proof-banner__content[data-speed="1"] {
@@ -3202,13 +3203,43 @@ body {
   animation-duration: 10s;
 }
 
+.social-proof-banner__item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.social-proof-banner__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  color: white;
+  transition: transform 0.3s ease;
+}
+
+.social-proof-banner__icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  fill: none;
+}
+
+.social-proof-banner__item:hover .social-proof-banner__icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
 .social-proof-banner__text {
   font-size: 1rem;
   font-weight: 700;
   color: white;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 @keyframes scroll-text {
