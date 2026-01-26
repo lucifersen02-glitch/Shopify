@@ -125,12 +125,18 @@ class HeroCarousel {
 function animateCounter(element, target, duration = 2000) {
   // Handle non-numeric values (like "24/7") - display immediately without animation
   if (target.includes('/') || isNaN(parseFloat(target.replace(/[^0-9.]/g, '')))) {
-    element.textContent = target;
+    // Preserve existing structure if it has a plus-sign span
+    const existingPlus = element.querySelector('.plus-sign');
+    if (existingPlus) {
+      element.innerHTML = target.replace('+', '<span class="plus-sign" style="font-weight: 900; letter-spacing: 0;">+</span>');
+    } else {
+      element.textContent = target;
+    }
     return;
   }
 
   // Extract numeric value and suffix
-  const numericMatch = target.match(/([\d.]+)([KMB]?\+?)/);
+  const numericMatch = target.match(/([\d.]+)([KMB]?)(\+?)/);
   if (!numericMatch) {
     element.textContent = target;
     return;
@@ -138,6 +144,7 @@ function animateCounter(element, target, duration = 2000) {
 
   const numericValue = parseFloat(numericMatch[1]);
   const suffix = numericMatch[2] || '';
+  const hasPlus = numericMatch[3] === '+';
   const multiplier = suffix.includes('K') ? 1000 : suffix.includes('M') ? 1000000 : suffix.includes('B') ? 1000000000 : 1;
   const actualTarget = numericValue * multiplier;
 
@@ -145,31 +152,37 @@ function animateCounter(element, target, duration = 2000) {
   const increment = actualTarget / (duration / 16); // 60fps
   let current = start;
 
+  // Helper function to format with styled plus sign
+  const formatWithPlus = (value, suffixText) => {
+    const plusHtml = hasPlus ? '<span class="plus-sign" style="font-weight: 900; letter-spacing: 0;">+</span>' : '';
+    return value + suffixText + plusHtml;
+  };
+
   const timer = setInterval(() => {
     current += increment;
     if (current >= actualTarget) {
-      // Format final value with suffix
+      // Format final value with suffix and styled plus
       if (suffix.includes('K')) {
-        element.textContent = numericValue + 'K' + (suffix.includes('+') ? '+' : '');
+        element.innerHTML = formatWithPlus(numericValue + 'K', '');
       } else if (suffix.includes('M')) {
-        element.textContent = numericValue + 'M' + (suffix.includes('+') ? '+' : '');
+        element.innerHTML = formatWithPlus(numericValue + 'M', '');
       } else if (suffix.includes('B')) {
-        element.textContent = numericValue + 'B' + (suffix.includes('+') ? '+' : '');
+        element.innerHTML = formatWithPlus(numericValue + 'B', '');
       } else {
-        element.textContent = Math.floor(current) + (suffix.includes('+') ? '+' : '');
+        element.innerHTML = formatWithPlus(Math.floor(current), '');
       }
       clearInterval(timer);
     } else {
       // Animate with proper formatting
       const displayValue = current / multiplier;
       if (suffix.includes('K')) {
-        element.textContent = Math.floor(displayValue) + 'K' + (suffix.includes('+') ? '+' : '');
+        element.innerHTML = formatWithPlus(Math.floor(displayValue) + 'K', '');
       } else if (suffix.includes('M')) {
-        element.textContent = Math.floor(displayValue) + 'M' + (suffix.includes('+') ? '+' : '');
+        element.innerHTML = formatWithPlus(Math.floor(displayValue) + 'M', '');
       } else if (suffix.includes('B')) {
-        element.textContent = Math.floor(displayValue) + 'B' + (suffix.includes('+') ? '+' : '');
+        element.innerHTML = formatWithPlus(Math.floor(displayValue) + 'B', '');
       } else {
-        element.textContent = Math.floor(current) + (suffix.includes('+') ? '+' : '');
+        element.innerHTML = formatWithPlus(Math.floor(current), '');
       }
     }
   }, 16);
