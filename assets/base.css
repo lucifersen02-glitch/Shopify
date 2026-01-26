@@ -2861,6 +2861,37 @@ body {
   .product-card__price--compare::before {
     font-size: 0.8125rem;
   }
+
+  /* Featured Products Mobile Adjustments */
+  .featured-products {
+    padding: var(--spacing-lg) 0;
+  }
+
+  .featured-products .section-heading {
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+    margin-bottom: var(--spacing-md);
+    padding: 0 var(--spacing-sm);
+  }
+
+  .featured-products .container {
+    padding: 0 var(--spacing-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .featured-products {
+    padding: var(--spacing-md) 0;
+  }
+
+  .featured-products .section-heading {
+    font-size: clamp(1.5rem, 7vw, 2rem);
+    margin-bottom: var(--spacing-sm);
+    padding: 0 var(--spacing-xs);
+  }
+
+  .featured-products .container {
+    padding: 0 var(--spacing-xs);
+  }
 }
 
 /* Trust Badge Section */
