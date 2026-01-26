@@ -39,7 +39,7 @@
       {% for product in collections.all.products limit: products_to_show %}
         {% unless product.id == current_product.id %}
           <div class="product-card" data-animate="fade-up" data-delay="{{ forloop.index | times: 0.1 }}">
-            <a href="/collections/all" class="product-card__link">
+            <a href="{{ product.url }}" class="product-card__link">
               <div class="product-card__image">
                 {% if product.featured_image %}
                   {{ product.featured_image | image_url: width: 400 | image_tag: loading: 'lazy', alt: product.title }}

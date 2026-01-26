@@ -21,12 +21,22 @@
 {% endschema %}
 
 {%- liquid
-  if collection.handle == 'all' or collection.handle == blank or collection == blank
+  if collection.handle == 'all'
+    assign products_collection = collections.all
+    assign show_all_products = true
+  elsif collection.handle == blank or collection == blank
     assign products_collection = collections.all
     assign show_all_products = true
   else
     assign products_collection = collection
     assign show_all_products = false
+  endif
+  
+  comment
+    Fallback: If collections.all doesn't exist, use all products from all collections
+  endcomment
+  if products_collection == blank or products_collection.products.size == 0
+    assign products_collection = collections.all
   endif
 -%}
 
@@ -51,7 +61,7 @@
       <div class="product-grid">
         {% for product in products_collection.products %}
           <div class="product-card" data-animate="fade-up" data-delay="{{ forloop.index | times: 0.05 }}">
-            <a href="/collections/all" class="product-card__link">
+            <a href="{{ product.url }}" class="product-card__link">
               <div class="product-card__image">
                 {% if product.featured_image %}
                   {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.featured_image.alt | escape, class: 'product-card__image-img' }}
