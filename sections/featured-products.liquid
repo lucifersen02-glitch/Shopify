@@ -47,7 +47,7 @@
             <a href="{% if product.url %}{{ product.url }}{% else %}{{ routes.collections_url }}{% endif %}" class="product-card__link">
               <div class="product-card__image">
                 {% if product.featured_image %}
-                  {{ product.featured_image | image_url: width: 400 | image_tag: loading: 'lazy', alt: product.title }}
+                  {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title, class: 'product-card__image-img' }}
                 {% else %}
                   {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
                 {% endif %}
