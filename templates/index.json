@@ -35,14 +35,6 @@
         "slide_3_image": "shopify://shop_images/a-woman-in-her-shop.jpg"
       }
     },
-    "trust_badge": {
-      "type": "trust-badge",
-      "settings": {
-        "rating": "4.8",
-        "customer_count": "50,000+",
-        "label": "Customers"
-      }
-    },
     "featured_products": {
       "type": "featured-products",
       "settings": {
@@ -56,7 +48,7 @@
       "settings": {
         "heading": "Why Shop With Us",
         "feature_1_title": "Free Shipping",
-        "feature_1_description": "Free shipping on orders over $50",
+        "feature_1_description": "Free shipping on orders over 500Rs",
         "feature_2_title": "Secure Payment",
         "feature_2_description": "100% secure payment processing",
         "feature_3_title": "Easy Returns",
@@ -124,7 +116,6 @@
   "order": [
     "header",
     "hero",
-    "trust_badge",
     "featured_products",
     "features",
     "social_proof_banner",
