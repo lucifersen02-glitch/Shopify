@@ -123,25 +123,53 @@ class HeroCarousel {
 
 // Statistics Counter Animation
 function animateCounter(element, target, duration = 2000) {
+  // Handle non-numeric values (like "24/7") - display immediately without animation
+  if (target.includes('/') || isNaN(parseFloat(target.replace(/[^0-9.]/g, '')))) {
+    element.textContent = target;
+    return;
+  }
+
+  // Extract numeric value and suffix
+  const numericMatch = target.match(/([\d.]+)([KMB]?\+?)/);
+  if (!numericMatch) {
+    element.textContent = target;
+    return;
+  }
+
+  const numericValue = parseFloat(numericMatch[1]);
+  const suffix = numericMatch[2] || '';
+  const multiplier = suffix.includes('K') ? 1000 : suffix.includes('M') ? 1000000 : suffix.includes('B') ? 1000000000 : 1;
+  const actualTarget = numericValue * multiplier;
+
   const start = 0;
-  const increment = target / (duration / 16); // 60fps
+  const increment = actualTarget / (duration / 16); // 60fps
   let current = start;
 
   const timer = setInterval(() => {
     current += increment;
-    if (current >= target) {
-      element.textContent = target;
+    if (current >= actualTarget) {
+      // Format final value with suffix
+      if (suffix.includes('K')) {
+        element.textContent = numericValue + 'K' + (suffix.includes('+') ? '+' : '');
+      } else if (suffix.includes('M')) {
+        element.textContent = numericValue + 'M' + (suffix.includes('+') ? '+' : '');
+      } else if (suffix.includes('B')) {
+        element.textContent = numericValue + 'B' + (suffix.includes('+') ? '+' : '');
+      } else {
+        element.textContent = Math.floor(current) + (suffix.includes('+') ? '+' : '');
+      }
       clearInterval(timer);
     } else {
-      // Handle different formats (numbers, percentages, etc.)
-      if (target.includes('+')) {
-        element.textContent = Math.floor(current) + '+';
-      } else if (target.includes('/')) {
-        element.textContent = target; // Don't animate time-based values
-      } else if (!isNaN(target)) {
-        element.textContent = Math.floor(current);
+      // Animate with proper formatting
+      const displayValue = current / multiplier;
+      if (suffix.includes('K')) {
+        element.textContent = Math.floor(displayValue) + 'K' + (suffix.includes('+') ? '+' : '');
+      } else if (suffix.includes('M')) {
+        element.textContent = Math.floor(displayValue) + 'M' + (suffix.includes('+') ? '+' : '');
+      } else if (suffix.includes('B')) {
+        element.textContent = Math.floor(displayValue) + 'B' + (suffix.includes('+') ? '+' : '');
       } else {
-        element.textContent = target;
+        element.textContent = Math.floor(current) + (suffix.includes('+') ? '+' : '');
       }
     }
   }, 16);
