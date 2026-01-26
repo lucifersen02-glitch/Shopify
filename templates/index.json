@@ -6,8 +6,14 @@
     "hero": {
       "type": "hero"
     },
+    "stats": {
+      "type": "stats"
+    },
     "featured_products": {
       "type": "featured-products"
+    },
+    "features": {
+      "type": "features"
     },
     "about": {
       "type": "about"
@@ -22,7 +28,9 @@
   "order": [
     "header",
     "hero",
+    "stats",
     "featured_products",
+    "features",
     "about",
     "contact",
     "footer"
