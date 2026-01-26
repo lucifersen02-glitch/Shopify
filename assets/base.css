@@ -2673,6 +2673,7 @@ body {
 
   .hero-carousel__indicators {
     bottom: var(--spacing-sm);
+    z-index: 1;
   }
 
   .section-heading {
@@ -2979,13 +2980,19 @@ body {
   padding: 0;
   background: transparent;
   position: relative;
-  z-index: 2;
+  z-index: 3;
   margin-top: -100px;
   padding-top: calc(0.3rem + 100px);
   padding-bottom: 0.3rem;
   transition: all 0.6s ease;
   min-height: auto;
   overflow: visible;
+}
+
+/* Hide hero carousel indicators when trust badge overlaps */
+.trust-badge ~ * .hero-carousel__indicators,
+.hero-carousel__indicators {
+  z-index: 1;
 }
 
 /* Extremely subtle overlay - nearly invisible */
