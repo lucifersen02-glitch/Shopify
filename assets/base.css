@@ -1375,14 +1375,17 @@ body {
 }
 
 .product-images__zoom-result img {
-  width: 200%;
-  height: 200%;
+  width: auto;
+  height: auto;
   object-fit: contain;
   position: absolute;
   top: 0;
   left: 0;
   pointer-events: none;
   transition: transform 0.05s ease-out;
+  display: block;
+  max-width: none;
+  max-height: none;
 }
 
 /* Adjust zoom result position on smaller screens */
