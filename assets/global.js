@@ -438,13 +438,51 @@ function initProductPage() {
       const zoomImageSrc = featuredImage.getAttribute('data-zoom-image') || featuredImage.src.replace(/width=\d+/, 'width=2000');
       zoomResultImg.src = zoomImageSrc;
       
+      // Wait for images to load to get accurate dimensions
+      const updateZoomDimensions = () => {
+        const containerRect = imageContainer.getBoundingClientRect();
+        const imageRect = featuredImage.getBoundingClientRect();
+        
+        // Get actual displayed image dimensions (accounting for object-fit: contain)
+        const containerAspect = containerRect.width / containerRect.height;
+        const imageAspect = featuredImage.naturalWidth / featuredImage.naturalHeight;
+        
+        let displayedImageWidth, displayedImageHeight, imageOffsetX, imageOffsetY;
+        
+        if (imageAspect > containerAspect) {
+          // Image is wider - fit to width
+          displayedImageWidth = containerRect.width;
+          displayedImageHeight = containerRect.width / imageAspect;
+          imageOffsetX = 0;
+          imageOffsetY = (containerRect.height - displayedImageHeight) / 2;
+        } else {
+          // Image is taller - fit to height
+          displayedImageWidth = containerRect.height * imageAspect;
+          displayedImageHeight = containerRect.height;
+          imageOffsetX = (containerRect.width - displayedImageWidth) / 2;
+          imageOffsetY = 0;
+        }
+        
+        return {
+          containerRect,
+          displayedImageWidth,
+          displayedImageHeight,
+          imageOffsetX,
+          imageOffsetY,
+          naturalWidth: featuredImage.naturalWidth,
+          naturalHeight: featuredImage.naturalHeight
+        };
+      };
+      
       // Lens size (adjustable)
       const lensSize = 150;
       zoomLens.style.width = lensSize + 'px';
       zoomLens.style.height = lensSize + 'px';
       
-      // Calculate zoom ratio
-      const zoomRatio = 2; // 2x zoom
+      // Zoom result size
+      const zoomResultSize = 400;
+      zoomResult.style.width = zoomResultSize + 'px';
+      zoomResult.style.height = zoomResultSize + 'px';
       
       imageContainer.addEventListener('mouseenter', function() {
         zoomLens.classList.add('active');
@@ -459,39 +497,84 @@ function initProductPage() {
       imageContainer.addEventListener('mousemove', function(e) {
         if (!zoomLens.classList.contains('active')) return;
         
-        const rect = imageContainer.getBoundingClientRect();
-        const containerWidth = rect.width;
-        const containerHeight = rect.height;
-        const imageRect = featuredImage.getBoundingClientRect();
+        const dims = updateZoomDimensions();
+        const { containerRect, displayedImageWidth, displayedImageHeight, imageOffsetX, imageOffsetY, naturalWidth, naturalHeight } = dims;
         
         // Calculate mouse position relative to container
-        let x = e.clientX - rect.left;
-        let y = e.clientY - rect.top;
+        const mouseX = e.clientX - containerRect.left;
+        const mouseY = e.clientY - containerRect.top;
         
-        // Calculate lens position (centered on cursor)
-        let lensX = x - lensSize / 2;
-        let lensY = y - lensSize / 2;
+        // Calculate mouse position relative to the actual displayed image
+        const imageX = mouseX - imageOffsetX;
+        const imageY = mouseY - imageOffsetY;
         
-        // Keep lens within bounds
-        lensX = Math.max(0, Math.min(lensX, containerWidth - lensSize));
-        lensY = Math.max(0, Math.min(lensY, containerHeight - lensSize));
+        // Check if mouse is over the actual image (not padding area)
+        if (imageX < 0 || imageX > displayedImageWidth || imageY < 0 || imageY > displayedImageHeight) {
+          zoomLens.classList.remove('active');
+          zoomResult.classList.remove('active');
+          return;
+        }
+        
+        // Calculate lens position (centered on cursor, but relative to container)
+        let lensX = mouseX - lensSize / 2;
+        let lensY = mouseY - lensSize / 2;
+        
+        // Keep lens within image bounds (not container bounds)
+        const minLensX = imageOffsetX;
+        const maxLensX = imageOffsetX + displayedImageWidth - lensSize;
+        const minLensY = imageOffsetY;
+        const maxLensY = imageOffsetY + displayedImageHeight - lensSize;
+        
+        lensX = Math.max(minLensX, Math.min(lensX, maxLensX));
+        lensY = Math.max(minLensY, Math.min(lensY, maxLensY));
         
         zoomLens.style.left = lensX + 'px';
         zoomLens.style.top = lensY + 'px';
         
         // Calculate zoom result position (to the right of image)
-        const zoomResultX = rect.right + 20;
-        const zoomResultY = rect.top;
+        const zoomResultX = containerRect.right + 20;
+        const zoomResultY = containerRect.top;
         
         zoomResult.style.left = zoomResultX + 'px';
         zoomResult.style.top = zoomResultY + 'px';
         
-        // Calculate background position for zoom result
-        // The zoom image is 2x the size, so we need to adjust the position
-        const bgX = -(lensX * zoomRatio);
-        const bgY = -(lensY * zoomRatio);
+        // Calculate the position in the zoom image
+        // Map the lens position relative to displayed image to the zoom image
+        const lensRelativeX = lensX - imageOffsetX;
+        const lensRelativeY = lensY - imageOffsetY;
         
-        zoomResultImg.style.transform = `translate(${bgX}px, ${bgY}px)`;
+        // Calculate ratio between displayed image and natural image
+        const scaleX = naturalWidth / displayedImageWidth;
+        const scaleY = naturalHeight / displayedImageHeight;
+        
+        // Calculate position in zoom image (which is 2x the natural size)
+        const zoomImageWidth = naturalWidth * 2;
+        const zoomImageHeight = naturalHeight * 2;
+        
+        // Position in zoom image
+        const zoomX = (lensRelativeX * scaleX * 2) - (zoomResultSize / 2);
+        const zoomY = (lensRelativeY * scaleY * 2) - (zoomResultSize / 2);
+        
+        // Apply transform to show the correct area
+        zoomResultImg.style.transform = `translate(${-zoomX}px, ${-zoomY}px)`;
+      });
+      
+      // Update dimensions on window resize
+      let resizeTimeout;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          if (zoomLens.classList.contains('active')) {
+            // Trigger a mousemove to recalculate
+            const event = new MouseEvent('mousemove', {
+              bubbles: true,
+              cancelable: true,
+              clientX: event.clientX,
+              clientY: event.clientY
+            });
+            imageContainer.dispatchEvent(event);
+          }
+        }, 100);
       });
     }
   }
