@@ -21,12 +21,16 @@
 {% endschema %}
 
 {%- liquid
-  assign products_collection = collection | default: collections.all
+  if collection.handle == 'all' or collection.handle == blank
+    assign products_collection = collections.all
+  else
+    assign products_collection = collection
+  endif
 -%}
 
 <section class="collection-products">
   <div class="container">
-    {% if collection %}
+    {% if collection and collection.handle != 'all' %}
       <h1 class="collection-products__title">{{ collection.title }}</h1>
       {% if collection.description != blank %}
         <div class="collection-products__description">
