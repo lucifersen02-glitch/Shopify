@@ -697,8 +697,19 @@ body {
 }
 
 .featured-products .section-heading {
-  color: white;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: white !important;
+  -webkit-text-fill-color: white !important;
+  background: none !important;
+  background-clip: unset !important;
+  -webkit-background-clip: unset !important;
+  text-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.2),
+    0 0 20px rgba(0, 0, 0, 0.15);
+  font-weight: 900;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  letter-spacing: -0.02em;
+  margin-bottom: var(--spacing-xl);
 }
 
 .product-grid {
