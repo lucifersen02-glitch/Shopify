@@ -1,0 +1,81 @@
+{% schema %}
+{
+  "name": "Collection Products",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 24,
+      "step": 4,
+      "default": 12,
+      "label": "Products per page"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Products"
+    }
+  ]
+}
+{% endschema %}
+
+{%- liquid
+  assign products_collection = collection | default: collections.all
+-%}
+
+<section class="collection-products">
+  <div class="container">
+    {% if collection %}
+      <h1 class="collection-products__title">{{ collection.title }}</h1>
+      {% if collection.description != blank %}
+        <div class="collection-products__description">
+          {{ collection.description }}
+        </div>
+      {% endif %}
+    {% else %}
+      <h1 class="collection-products__title">All Products</h1>
+      <p class="collection-products__description">Browse our complete selection of products</p>
+    {% endif %}
+
+    {% if products_collection.products.size > 0 %}
+      <div class="product-grid">
+        {% for product in products_collection.products %}
+          <div class="product-card" data-animate="fade-up" data-delay="{{ forloop.index | times: 0.05 }}">
+            <a href="{% if product.url %}{{ product.url }}{% else %}{{ routes.collections_url }}{% endif %}" class="product-card__link">
+              <div class="product-card__image">
+                {% if product.featured_image %}
+                  {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.featured_image.alt | escape, class: 'product-card__image-img' }}
+                {% else %}
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+                {% if product.compare_at_price > product.price %}
+                  <span class="product-card__badge"></span>
+                {% endif %}
+                <div class="product-card__overlay">
+                  <button class="product-card__quick-view">Quick View</button>
+                </div>
+              </div>
+              <div class="product-card__info">
+                <h3 class="product-card__title">{{ product.title }}</h3>
+                <p class="product-card__price">
+                  <span class="product-card__price-current">{{ product.price | money }}</span>
+                  {% if product.compare_at_price > product.price %}
+                    <span class="product-card__price--compare">{{ product.compare_at_price | money }}</span>
+                    {% assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round %}
+                    <span class="product-card__discount">save {{ discount }}%</span>
+                  {% endif %}
+                </p>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="collection-products__empty">
+        <p>No products found.</p>
+        <a href="{{ routes.root_url }}" class="button button--primary">Continue Shopping</a>
+      </div>
+    {% endif %}
+  </div>
+</section>

@@ -3251,6 +3251,42 @@ body {
   }
 }
 
+/* Collection Products Section */
+.collection-products {
+  padding: var(--spacing-xl) 0;
+  background: white;
+  min-height: 60vh;
+}
+
+.collection-products__title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text);
+  text-align: center;
+}
+
+.collection-products__description {
+  font-size: 1.125rem;
+  color: var(--color-text-light);
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.collection-products__empty {
+  text-align: center;
+  padding: var(--spacing-xl) 0;
+}
+
+.collection-products__empty p {
+  font-size: 1.125rem;
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-md);
+}
+
 /* Our Story Section */
 .our-story {
   padding: var(--spacing-xl) 0;
