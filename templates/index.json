@@ -31,8 +31,8 @@
   "order": [
     "header",
     "hero",
-    "stats",
     "featured_products",
+    "stats",
     "testimonials",
     "features",
     "about",
