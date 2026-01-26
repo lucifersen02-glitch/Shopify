@@ -329,4 +329,48 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('load', () => {
     document.body.classList.add('loaded');
   });
+
+  // Mobile menu toggle
+  const mobileMenuToggle = document.querySelector('.header__mobile-menu-toggle');
+  const mobileNav = document.querySelector('.header__mobile-nav');
+  
+  if (mobileMenuToggle && mobileNav) {
+    mobileMenuToggle.addEventListener('click', () => {
+      mobileNav.classList.toggle('active');
+      const isOpen = mobileNav.classList.contains('active');
+      mobileMenuToggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Close mobile menu when clicking on a link
+    const mobileMenuLinks = mobileNav.querySelectorAll('a');
+    mobileMenuLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNav.classList.remove('active');
+        mobileMenuToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!mobileNav.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+        mobileNav.classList.remove('active');
+        mobileMenuToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  // Fix product links - ensure they work even if product.url is empty
+  const productLinks = document.querySelectorAll('.product-card__link');
+  productLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      // Check if href is invalid or empty
+      if (!href || href === '#' || href.includes('undefined') || href.trim() === '') {
+        e.preventDefault();
+        // Redirect to collections page or home
+        const collectionsUrl = window.routes?.collections_url || '/collections/all';
+        window.location.href = collectionsUrl;
+      }
+    });
+  });
 });
