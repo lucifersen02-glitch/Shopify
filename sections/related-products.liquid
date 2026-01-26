@@ -47,7 +47,7 @@
                   {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
                 {% endif %}
                 {% if product.compare_at_price > product.price %}
-                  <span class="product-card__badge">Sale</span>
+                  <span class="product-card__badge"></span>
                 {% endif %}
                 <div class="product-card__overlay">
                   <button class="product-card__quick-view">Quick View</button>
@@ -59,6 +59,8 @@
                   <span class="product-card__price-current">{{ product.price | money }}</span>
                   {% if product.compare_at_price > product.price %}
                     <span class="product-card__price--compare">{{ product.compare_at_price | money }}</span>
+                    {% assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round %}
+                    <span class="product-card__discount">save {{ discount }}%</span>
                   {% endif %}
                 </p>
               </div>

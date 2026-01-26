@@ -26,7 +26,9 @@
 <section class="product-description-section">
   <div class="container">
     <div class="product-description">
-      <h2 class="section-heading">{{ section.settings.heading }}</h2>
+      {% if section.settings.heading != blank %}
+        <h2 class="section-heading">{{ section.settings.heading }}</h2>
+      {% endif %}
       <div class="product-description__content">
         {% if section.settings.show_full_description %}
           <div class="product-description__full">
