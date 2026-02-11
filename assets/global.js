@@ -755,3 +755,182 @@ function initProductPage() {
       .catch(error => console.error('Error updating cart count:', error));
   }
 }
+
+// Cart Page Functionality
+function initCartPage() {
+  const cartForm = document.getElementById('cart-form');
+  if (!cartForm) return;
+
+  // Quantity selector buttons
+  const decreaseButtons = document.querySelectorAll('.quantity-selector__button--decrease');
+  const increaseButtons = document.querySelectorAll('.quantity-selector__button--increase');
+  const quantityInputs = document.querySelectorAll('.quantity-selector__input');
+
+  // Decrease quantity
+  decreaseButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const itemKey = this.dataset.itemKey;
+      const input = document.querySelector(`#quantity-${itemKey}`);
+      const currentValue = parseInt(input.value) || 0;
+      if (currentValue > 1) {
+        input.value = currentValue - 1;
+        updateCartItem(itemKey, input.value);
+      }
+    });
+  });
+
+  // Increase quantity
+  increaseButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const itemKey = this.dataset.itemKey;
+      const input = document.querySelector(`#quantity-${itemKey}`);
+      const currentValue = parseInt(input.value) || 0;
+      input.value = currentValue + 1;
+      updateCartItem(itemKey, input.value);
+    });
+  });
+
+  // Quantity input change
+  quantityInputs.forEach(input => {
+    input.addEventListener('change', function() {
+      const itemKey = this.dataset.itemKey;
+      const quantity = parseInt(this.value) || 0;
+      if (quantity > 0) {
+        updateCartItem(itemKey, quantity);
+      }
+    });
+  });
+
+  // Update cart item
+  function updateCartItem(itemKey, quantity) {
+    const formData = new FormData();
+    formData.append('updates[]', quantity);
+    
+    fetch(window.routes.cart_update_url, {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.item_count !== undefined) {
+        location.reload(); // Reload to show updated cart
+      }
+    })
+    .catch(error => {
+      console.error('Error updating cart:', error);
+      alert('Failed to update cart. Please try again.');
+    });
+  }
+
+  // Form submission
+  cartForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    
+    fetch(window.routes.cart_update_url, {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      location.reload();
+    })
+    .catch(error => {
+      console.error('Error updating cart:', error);
+      alert('Failed to update cart. Please try again.');
+    });
+  });
+}
+
+// Checkout Page Functionality
+function initCheckoutPage() {
+  const checkoutForm = document.getElementById('checkout-form');
+  if (!checkoutForm) return;
+
+  checkoutForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    // Store form data in sessionStorage
+    const formData = new FormData(this);
+    const shippingData = {};
+    for (let [key, value] of formData.entries()) {
+      if (key.startsWith('shipping[')) {
+        shippingData[key] = value;
+      }
+    }
+    sessionStorage.setItem('shippingData', JSON.stringify(shippingData));
+    // Redirect to payment page
+    window.location.href = '/pages/payment';
+  });
+}
+
+// Payment Page Functionality
+function initPaymentPage() {
+  const paymentForm = document.getElementById('payment-form');
+  if (!paymentForm) return;
+
+  // Payment method selection
+  const paymentMethods = document.querySelectorAll('.payment-method__input');
+  paymentMethods.forEach(method => {
+    method.addEventListener('change', function() {
+      const cardDetails = document.getElementById('card-details');
+      if (this.value === 'card') {
+        cardDetails.style.display = 'block';
+      } else {
+        cardDetails.style.display = 'none';
+      }
+    });
+  });
+
+  // Card number formatting
+  const cardNumberInput = document.getElementById('card-number');
+  if (cardNumberInput) {
+    cardNumberInput.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\s/g, '');
+      let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+      e.target.value = formattedValue;
+    });
+  }
+
+  // Expiry date formatting
+  const expiryInput = document.getElementById('card-expiry');
+  if (expiryInput) {
+    expiryInput.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length >= 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+      }
+      e.target.value = value;
+    });
+  }
+
+  // Form submission
+  paymentForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Show success message
+    const successSection = document.querySelector('.payment-success');
+    const formSection = document.querySelector('.payment-form-wrapper');
+    
+    if (successSection && formSection) {
+      formSection.style.display = 'none';
+      successSection.style.display = 'block';
+      successSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // Clear cart (in real implementation, this would be handled by Shopify)
+    sessionStorage.removeItem('shippingData');
+  });
+}
+
+// Initialize pages
+document.addEventListener('DOMContentLoaded', function() {
+  if (document.getElementById('cart-form')) {
+    initCartPage();
+  }
+  if (document.getElementById('checkout-form')) {
+    initCheckoutPage();
+  }
+  if (document.getElementById('payment-form')) {
+    initPaymentPage();
+  }
+});

@@ -1,0 +1,145 @@
+{% schema %}
+{
+  "name": "Checkout",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Checkout Heading",
+      "default": "Checkout"
+    },
+    {
+      "type": "text",
+      "id": "back_to_cart_text",
+      "label": "Back to Cart Text",
+      "default": "Back to Cart"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Checkout"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="checkout-section">
+  <div class="container">
+    <h1 class="checkout-section__title">{{ section.settings.heading | default: "Checkout" }}</h1>
+
+    {% if cart.item_count > 0 %}
+      <div class="checkout-wrapper">
+        <div class="checkout-form-wrapper">
+          <form action="/pages/payment" method="post" id="checkout-form" class="checkout-form">
+            <div class="checkout-form__section">
+              <h2 class="checkout-form__section-title">Shipping Information</h2>
+              
+              <div class="form-group">
+                <label for="shipping-first-name" class="form-label">First Name *</label>
+                <input type="text" id="shipping-first-name" name="shipping[first_name]" class="form-input" required>
+              </div>
+
+              <div class="form-group">
+                <label for="shipping-last-name" class="form-label">Last Name *</label>
+                <input type="text" id="shipping-last-name" name="shipping[last_name]" class="form-input" required>
+              </div>
+
+              <div class="form-group">
+                <label for="shipping-email" class="form-label">Email Address *</label>
+                <input type="email" id="shipping-email" name="shipping[email]" class="form-input" required>
+              </div>
+
+              <div class="form-group">
+                <label for="shipping-phone" class="form-label">Phone Number *</label>
+                <input type="tel" id="shipping-phone" name="shipping[phone]" class="form-input" required>
+              </div>
+
+              <div class="form-group">
+                <label for="shipping-address" class="form-label">Address *</label>
+                <input type="text" id="shipping-address" name="shipping[address1]" class="form-input" required>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="shipping-city" class="form-label">City *</label>
+                  <input type="text" id="shipping-city" name="shipping[city]" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="shipping-zip" class="form-label">ZIP/Postal Code *</label>
+                  <input type="text" id="shipping-zip" name="shipping[zip]" class="form-input" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="shipping-country" class="form-label">Country *</label>
+                <select id="shipping-country" name="shipping[country]" class="form-select" required>
+                  <option value="">Select Country</option>
+                  <option value="US">United States</option>
+                  <option value="CA">Canada</option>
+                  <option value="GB">United Kingdom</option>
+                  <option value="AU">Australia</option>
+                  <option value="IN">India</option>
+                  <option value="DE">Germany</option>
+                  <option value="FR">France</option>
+                  <option value="IT">Italy</option>
+                  <option value="ES">Spain</option>
+                  <option value="JP">Japan</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="checkout-form__section">
+              <h2 class="checkout-form__section-title">Order Summary</h2>
+              <div class="checkout-summary">
+                {% for item in cart.items %}
+                  <div class="checkout-summary__item">
+                    <div class="checkout-summary__item-image">
+                      {% if item.image %}
+                        {{ item.image | image_url: width: 80 | image_tag: loading: 'lazy', alt: item.title }}
+                      {% endif %}
+                    </div>
+                    <div class="checkout-summary__item-details">
+                      <h4>{{ item.product.title }}</h4>
+                      <p>Quantity: {{ item.quantity }}</p>
+                      <p class="checkout-summary__item-price">{{ item.final_line_price | money }}</p>
+                    </div>
+                  </div>
+                {% endfor %}
+
+                <div class="checkout-summary__totals">
+                  <div class="checkout-summary__row">
+                    <span>Subtotal</span>
+                    <span>{{ cart.total_price | money }}</span>
+                  </div>
+                  <div class="checkout-summary__row">
+                    <span>Shipping</span>
+                    <span>Calculated at payment</span>
+                  </div>
+                  <div class="checkout-summary__row checkout-summary__row--total">
+                    <span>Total</span>
+                    <span>{{ cart.total_price | money }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="checkout-form__actions">
+              <a href="{{ routes.cart_url }}" class="button button--secondary">
+                {{ section.settings.back_to_cart_text | default: "Back to Cart" }}
+              </a>
+              <button type="submit" class="button button--primary">
+                Proceed to Payment
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    {% else %}
+      <div class="checkout-empty">
+        <p>Your cart is empty. Please add items to your cart before checkout.</p>
+        <a href="{{ routes.root_url }}" class="button button--primary">Continue Shopping</a>
+      </div>
+    {% endif %}
+  </div>
+</section>

@@ -1,0 +1,154 @@
+{% schema %}
+{
+  "name": "Cart",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Cart Heading",
+      "default": "Shopping Cart"
+    },
+    {
+      "type": "text",
+      "id": "continue_shopping_text",
+      "label": "Continue Shopping Text",
+      "default": "Continue Shopping"
+    },
+    {
+      "type": "text",
+      "id": "checkout_text",
+      "label": "Checkout Button Text",
+      "default": "Proceed to Checkout"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cart"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="cart-section">
+  <div class="container">
+    <h1 class="cart-section__title">{{ section.settings.heading | default: "Shopping Cart" }}</h1>
+
+    {% if cart.item_count > 0 %}
+      <form action="{{ routes.cart_url }}" method="post" id="cart-form" class="cart-form">
+        <div class="cart-items">
+          {% for item in cart.items %}
+            <div class="cart-item" data-item-key="{{ item.key }}">
+              <div class="cart-item__image">
+                <a href="{{ item.product.url }}">
+                  {% if item.image %}
+                    {{ item.image | image_url: width: 200 | image_tag: loading: 'lazy', alt: item.title }}
+                  {% else %}
+                    {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+                  {% endif %}
+                </a>
+              </div>
+              
+              <div class="cart-item__details">
+                <h3 class="cart-item__title">
+                  <a href="{{ item.product.url }}">{{ item.product.title }}</a>
+                </h3>
+                {% unless item.product.has_only_default_variant %}
+                  <p class="cart-item__variant">{{ item.variant.title }}</p>
+                {% endunless %}
+                <p class="cart-item__price">
+                  {{ item.final_price | money }}
+                  {% if item.original_price != item.final_price %}
+                    <span class="cart-item__price-original">{{ item.original_price | money }}</span>
+                  {% endif %}
+                </p>
+              </div>
+
+              <div class="cart-item__quantity">
+                <label for="quantity-{{ item.key }}" class="visually-hidden">Quantity</label>
+                <div class="quantity-selector">
+                  <button type="button" class="quantity-selector__button quantity-selector__button--decrease" data-item-key="{{ item.key }}" aria-label="Decrease quantity">-</button>
+                  <input 
+                    type="number" 
+                    id="quantity-{{ item.key }}" 
+                    name="updates[]" 
+                    value="{{ item.quantity }}" 
+                    min="0" 
+                    class="quantity-selector__input"
+                    data-item-key="{{ item.key }}"
+                  >
+                  <button type="button" class="quantity-selector__button quantity-selector__button--increase" data-item-key="{{ item.key }}" aria-label="Increase quantity">+</button>
+                </div>
+              </div>
+
+              <div class="cart-item__total">
+                <span class="cart-item__total-price">{{ item.final_line_price | money }}</span>
+              </div>
+
+              <div class="cart-item__remove">
+                <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0" class="cart-item__remove-button" aria-label="Remove item">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="cart-summary">
+          <div class="cart-summary__content">
+            <div class="cart-summary__row">
+              <span class="cart-summary__label">Subtotal</span>
+              <span class="cart-summary__value">{{ cart.total_price | money }}</span>
+            </div>
+            {% if cart.cart_level_discount_applications.size > 0 %}
+              {% for discount in cart.cart_level_discount_applications %}
+                <div class="cart-summary__row cart-summary__row--discount">
+                  <span class="cart-summary__label">Discount ({{ discount.title }})</span>
+                  <span class="cart-summary__value">-{{ discount.total_allocated_amount | money }}</span>
+                </div>
+              {% endfor %}
+            {% endif %}
+            <div class="cart-summary__row cart-summary__row--total">
+              <span class="cart-summary__label">Total</span>
+              <span class="cart-summary__value">{{ cart.total_price | money }}</span>
+            </div>
+            
+            <div class="cart-summary__actions">
+              <a href="{{ routes.root_url }}" class="button button--secondary">
+                {{ section.settings.continue_shopping_text | default: "Continue Shopping" }}
+              </a>
+              <button type="submit" name="update" class="button button--secondary" id="update-cart">
+                Update Cart
+              </button>
+              <a href="/pages/checkout" class="button button--primary">
+                {{ section.settings.checkout_text | default: "Proceed to Checkout" }}
+              </a>
+            </div>
+
+            {% if cart.cart_level_discount_applications.size == 0 %}
+              <div class="cart-summary__note">
+                <p>Taxes and shipping calculated at checkout</p>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </form>
+    {% else %}
+      <div class="cart-empty">
+        <div class="cart-empty__icon">
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 22C9.55228 22 10 21.5523 10 21C10 20.4477 9.55228 20 9 20C8.44772 20 8 20.4477 8 21C8 21.5523 8.44772 22 9 22Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M20 22C20.5523 22 21 21.5523 21 21C21 20.4477 20.5523 20 20 20C19.4477 20 19 20.4477 19 21C19 21.5523 19.4477 22 20 22Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M1 1H5L7.68 14.39C7.77144 14.8504 8.02191 15.264 8.38755 15.5583C8.75318 15.8526 9.2107 16.009 9.68 16H19.4C19.8693 16.009 20.3268 15.8526 20.6925 15.5583C21.0581 15.264 21.3086 14.8504 21.4 14.39L23 6H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2 class="cart-empty__title">Your cart is empty</h2>
+        <p class="cart-empty__description">Looks like you haven't added anything to your cart yet.</p>
+        <a href="{{ routes.root_url }}" class="button button--primary">
+          {{ section.settings.continue_shopping_text | default: "Continue Shopping" }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
