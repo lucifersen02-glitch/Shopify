@@ -1,0 +1,98 @@
+{% schema %}
+{
+  "name": "List Collections",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "All Products"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Browse our complete selection of products"
+    }
+  ],
+  "presets": [
+    {
+      "name": "List Collections"
+    }
+  ]
+}
+{% endschema %}
+
+{%- liquid
+  comment
+    Get all products from all collections
+    This section replaces the default collections listing with a products grid
+  endcomment
+  if collections.all != blank and collections.all.products.size > 0
+    assign all_products = collections.all.products
+  else
+    comment
+      Fallback: Collect products from all collections
+    endcomment
+    assign all_products = blank
+    
+    for collection in collections
+      unless collection.handle == 'frontpage' or collection.handle == blank
+        if all_products == blank
+          assign all_products = collection.products
+        else
+          assign all_products = all_products | concat: collection.products
+        endif
+      endunless
+    endfor
+  endif
+-%}
+
+<section class="all-products-section">
+  <div class="container">
+    <h1 class="all-products-section__title">{{ section.settings.heading | default: "All Products" }}</h1>
+    {% if section.settings.description != blank %}
+      <p class="all-products-section__description">{{ section.settings.description }}</p>
+    {% endif %}
+
+    {% if all_products.size > 0 %}
+      <div class="product-grid all-products-grid">
+        {% for product in all_products %}
+          <div class="product-card" data-animate="fade-up" data-delay="{{ forloop.index | times: 0.05 }}">
+            <a href="{{ product.url }}" class="product-card__link">
+              <div class="product-card__image">
+                {% if product.featured_image %}
+                  {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.featured_image.alt | escape, class: 'product-card__image-img' }}
+                {% else %}
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+                {% if product.compare_at_price > product.price %}
+                  <span class="product-card__badge"></span>
+                {% endif %}
+                <div class="product-card__overlay">
+                  <button class="product-card__quick-view">Quick View</button>
+                </div>
+              </div>
+              <div class="product-card__info">
+                <h3 class="product-card__title">{{ product.title }}</h3>
+                <p class="product-card__price">
+                  <span class="product-card__price-current">{{ product.price | money }}</span>
+                  {% if product.compare_at_price > product.price %}
+                    <span class="product-card__price--compare">{{ product.compare_at_price | money }}</span>
+                    {% assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round %}
+                    <span class="product-card__discount">save {{ discount }}%</span>
+                  {% endif %}
+                </p>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="all-products-section__empty">
+        <p>No products found. Please add products to your store.</p>
+        <a href="{{ routes.root_url }}" class="button button--primary">Continue Shopping</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
