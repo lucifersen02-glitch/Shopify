@@ -34,24 +34,24 @@
 
 {%- liquid
   comment
-    Simple approach: Use collections.all if available
-    If not available, we'll show products from the first non-frontpage collection
+    Get all products - try collections.all first, then collect from all collections
   endcomment
   if collections.all != blank and collections.all.products.size > 0
     assign all_products = collections.all.products
   else
     comment
-      Fallback: Use products from all collections
-      Loop through and collect products (Liquid limitation: we can't easily deduplicate)
+      Fallback: Collect products from all collections
+      Loop through collections and build product list
     endcomment
     assign all_products = blank
+    
     for collection in collections
-      unless collection.handle == 'frontpage'
+      unless collection.handle == 'frontpage' or collection.handle == blank
         if all_products == blank
           assign all_products = collection.products
         else
           comment
-            Note: concat may include duplicates, but it's the best we can do in Liquid
+            Concatenate products (may have duplicates but works in Liquid)
           endcomment
           assign all_products = all_products | concat: collection.products
         endif
