@@ -3254,35 +3254,79 @@ body {
 /* All Products Section */
 .all-products-section {
   padding: var(--spacing-xl) 0;
-  background: white;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0) 100%);
   min-height: 60vh;
+  position: relative;
+}
+
+.all-products-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .all-products-section__title {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 800;
-  margin-bottom: var(--spacing-md);
-  color: var(--color-text);
+  margin-bottom: var(--spacing-sm);
   text-align: center;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 4px 20px rgba(99, 102, 241, 0.2);
 }
 
 .all-products-section__description {
-  font-size: 1.125rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   color: var(--color-text-light);
   text-align: center;
   margin-bottom: var(--spacing-xl);
-  max-width: 800px;
+  max-width: 700px;
   margin-left: auto;
   margin-right: auto;
+  position: relative;
+  z-index: 1;
+  line-height: 1.7;
 }
 
 .all-products-grid {
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .all-products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .all-products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
 }
 
 .all-products-section__empty {
   text-align: center;
-  padding: var(--spacing-xl) 0;
+  padding: var(--spacing-xl);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .all-products-section__empty p {
